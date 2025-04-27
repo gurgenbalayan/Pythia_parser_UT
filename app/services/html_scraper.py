@@ -104,18 +104,29 @@ async def get_search_from_website(url: str, user_agent: str, query: str) -> str:
             input_field.send_keys(query)
             input_field.send_keys(Keys.RETURN)
             try:
-                submit = WebDriverWait(driver, 3).until(
+                web_table = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR,
-                                                    "#btnConfirmLimit"))
+                                                    "#grid_businessList"))
                 )
-                submit.click()
+                table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#grid_businessList')))
+                html = table.get_attribute('outerHTML')
+                return html
             except:
-                pass
-            wait.until(EC.presence_of_element_located(
-                (By.CSS_SELECTOR, "#grid_businessList")))
-            table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#grid_businessList')))
-            html = table.get_attribute('outerHTML')
-            return html
+                try:
+                    submit = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR,
+                                                        "#btnConfirmLimit"))
+                    )
+                    submit.click()
+                    web_table = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR,
+                                                        "#grid_businessList"))
+                    )
+                    table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#grid_businessList')))
+                    html = table.get_attribute('outerHTML')
+                    return html
+                except:
+                    return ""
         except TimeoutException as e:
             logger.error(f"Page load error {url}: {e}")
         except WebDriverException as e:
