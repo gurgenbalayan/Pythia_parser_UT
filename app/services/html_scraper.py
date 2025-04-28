@@ -1,11 +1,9 @@
-from typing import Dict
 from selenium.common import WebDriverException, TimeoutException
 from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import aiohttp
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from utils.logger import setup_logger
