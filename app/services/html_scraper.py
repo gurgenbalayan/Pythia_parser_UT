@@ -43,6 +43,7 @@ async def get_details_from_website(url: str, user_agent: str, entity_id: str) ->
         )
         try:
             wait = WebDriverWait(driver, 10)
+            driver.set_page_load_timeout(30)
             driver.get(url)
             link = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Search Business Entity Records")))
             link.click()
@@ -101,6 +102,7 @@ async def get_search_from_website(url: str, user_agent: str, query: str) -> str:
         )
         try:
             wait = WebDriverWait(driver, 10)
+            driver.set_page_load_timeout(30)
             driver.get(url)
             link = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Search Business Entity Records")))
             link.click()
