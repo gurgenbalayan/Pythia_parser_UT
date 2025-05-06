@@ -19,18 +19,24 @@ async def get_details_from_website(url: str, user_agent: str, entity_id: str) ->
     driver = None
     try:
         options = webdriver.ChromeOptions()
-        options.headless = True
         options.page_load_strategy = 'eager'
-        options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"])
-        options.add_argument('--lang=en-US')
-        options.add_argument(f'--user-agent={user_agent}')
+        options.add_argument(f'--lang=en-US')
         options.add_argument("--start-maximized")
         options.add_argument("--disable-webrtc")
         options.add_argument("--disable-features=WebRtcHideLocalIpsWithMdns")
         options.add_argument("--force-webrtc-ip-handling-policy=default_public_interface_only")
-        options.add_argument("--window-size=1920,1080")
         options.add_argument("--disable-features=DnsOverHttps")
+        options.add_argument("--no-default-browser-check")
+        options.add_argument("--no-first-run")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--test-type")
         options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option("useAutomationExtension", False)
+        options.set_capability("goog:loggingPrefs", {
+            "performance": "ALL",
+            "browser": "ALL"
+        })
         driver = webdriver.Remote(
             command_executor=SELENIUM_REMOTE_URL,
             options=options
@@ -71,19 +77,24 @@ async def get_search_from_website(url: str, user_agent: str, query: str) -> str:
     driver = None
     try:
         options = webdriver.ChromeOptions()
-        options.headless = True
         options.page_load_strategy = 'eager'
-        options.arguments.extend(["--no-sandbox", "--disable-setuid-sandbox"])
-        options.add_argument('--lang=en-US')
-        options.add_argument(f'--user-agent={user_agent}')
-        options.add_argument("--headless=new")
+        options.add_argument(f'--lang=en-US')
         options.add_argument("--start-maximized")
         options.add_argument("--disable-webrtc")
         options.add_argument("--disable-features=WebRtcHideLocalIpsWithMdns")
         options.add_argument("--force-webrtc-ip-handling-policy=default_public_interface_only")
-        options.add_argument("--window-size=1920,1080")
         options.add_argument("--disable-features=DnsOverHttps")
+        options.add_argument("--no-default-browser-check")
+        options.add_argument("--no-first-run")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--test-type")
         options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option("useAutomationExtension", False)
+        options.set_capability("goog:loggingPrefs", {
+            "performance": "ALL",
+            "browser": "ALL"
+        })
         driver = webdriver.Remote(
             command_executor=SELENIUM_REMOTE_URL,
             options=options
